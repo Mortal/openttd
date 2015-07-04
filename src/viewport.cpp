@@ -2314,6 +2314,31 @@ static HighLightStyle GetAutorailHT(int x, int y)
 	return HT_RAIL | _autorail_piece[x & TILE_UNIT_MASK][y & TILE_UNIT_MASK];
 }
 
+static HighLightStyle GetAutoroadHT(int x, int y)
+{
+	int rx = x & TILE_UNIT_MASK;
+	int ry = y & TILE_UNIT_MASK;
+	if (rx > ry) {
+		// ne or se
+		if (rx + ry >= TILE_SIZE) {
+			// se
+			return HT_ROADLINE | HT_DIR_X;
+		} else {
+			// ne
+			return HT_ROADLINE | HT_DIR_Y;
+		}
+	} else {
+		// nw or sw
+		if (rx + ry >= TILE_SIZE) {
+			// sw
+			return HT_ROADLINE | HT_DIR_Y;
+		} else {
+			// nw
+			return HT_ROADLINE | HT_DIR_X;
+		}
+	}
+}
+
 /**
  * Reset tile highlighting.
  */
