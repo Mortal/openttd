@@ -2967,6 +2967,8 @@ void VpSelectTilesWithMethod(int x, int y, ViewportPlaceMethod method)
 	int limit = 0;
 
 	switch (method) {
+		case VPM_ROADDIRS:
+			/* FALL THROUGH */
 		case VPM_X_OR_Y: // drag in X or Y direction
 			if (abs(sy - y) < abs(sx - x)) {
 				y = sy;
