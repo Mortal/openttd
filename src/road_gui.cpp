@@ -510,7 +510,7 @@ struct BuildRoadToolbarWindow : Window {
 				_place_road_flag = RF_NONE;
 				if (_tile_fract_coords.x >= 8) _place_road_flag |= RF_START_HALFROAD_X;
 				if (_tile_fract_coords.y >= 8) _place_road_flag |= RF_START_HALFROAD_Y;
-				VpStartPlaceSizing(tile, VPM_X_OR_Y, DDSP_PLACE_AUTOROAD);
+				VpStartPlaceSizing(tile, VPM_ROADDIRS, DDSP_PLACE_AUTOROAD);
 				break;
 
 			case WID_ROT_DEMOLISH:

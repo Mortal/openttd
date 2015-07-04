@@ -2553,7 +2553,7 @@ void VpStartPlaceSizing(TileIndex tile, ViewportPlaceMethod method, ViewportDrag
 	if ((_thd.place_mode & HT_DRAG_MASK) == HT_RECT) {
 		_thd.place_mode = HT_SPECIAL | others;
 		_thd.next_drawstyle = HT_RECT | others;
-	} else if (_thd.place_mode & (HT_RAIL | HT_LINE)) {
+	} else if (_thd.place_mode & (HT_RAIL | HT_LINE | HT_ROADLINE)) {
 		_thd.place_mode = HT_SPECIAL | others;
 		_thd.next_drawstyle = _thd.drawstyle | others;
 	} else {
@@ -2649,6 +2649,7 @@ static bool SwapDirection(HighLightStyle style, TileIndex start_tile, TileIndex 
 	uint end_y = TileY(end_tile);
 
 	switch (style & HT_DRAG_MASK) {
+		case HT_ROADLINE:
 		case HT_RAIL:
 		case HT_LINE: return (end_x > start_x || (end_x == start_x && end_y > start_y));
 
@@ -3039,6 +3040,7 @@ void VpSelectTilesWithMethod(int x, int y, ViewportPlaceMethod method)
 				x = sx;
 				style = HT_DIR_Y;
 			}
+			_thd.next_drawstyle = HT_ROADLINE | style;
 			goto calc_heightdiff_single_direction;
 
 		case VPM_X_LIMITED: // Drag in X direction (limited size).
@@ -3195,6 +3197,8 @@ EventState VpHandlePlaceSizingDrag()
 		_thd.place_mode = HT_RECT | others;
 	} else if (_thd.select_method & VPM_RAILDIRS) {
 		_thd.place_mode = (_thd.select_method & ~VPM_RAILDIRS) ? _thd.next_drawstyle : (HT_RAIL | others);
+	} else if (_thd.select_method & VPM_ROADDIRS) {
+		_thd.place_mode = HT_ROADLINE | others;
 	} else {
 		_thd.place_mode = HT_POINT | others;
 	}
