@@ -419,7 +419,7 @@ struct BuildRoadToolbarWindow : Window {
 				break;
 
 			case WID_ROT_AUTOROAD:
-				HandlePlacePushButton(this, WID_ROT_AUTOROAD, _road_type_infos[_cur_roadtype].cursor_autoroad, HT_RECT);
+				HandlePlacePushButton(this, WID_ROT_AUTOROAD, _road_type_infos[_cur_roadtype].cursor_autoroad, HT_ROADLINE);
 				this->last_started_action = widget;
 				break;
 
