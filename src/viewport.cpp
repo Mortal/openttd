@@ -1050,6 +1050,40 @@ draw_inner:
 			HighLightStyle type = _thd.drawstyle & HT_DIR_MASK;
 			assert(type < HT_DIR_END);
 			DrawAutorailSelection(ti, _autorail_type[type][0]);
+		} else if (_thd.drawstyle & HT_ROADLINE) {
+			HighLightStyle dir = _thd.drawstyle & HT_DIR_MASK;
+			SpriteID image;
+			PaletteID pal = _thd.make_square_red ? PALETTE_SEL_TILE_RED : PAL_NONE;
+			FoundationPart foundation_part = FOUNDATION_PART_NORMAL;
+			Slope s = RemoveHalftileSlope(ti->tileh);
+			int z = 7;
+
+			if (dir == HT_DIR_X) {
+				Slope up = s & (SLOPE_W | SLOPE_S);
+				Slope down = s & (SLOPE_N | SLOPE_E);
+				if (up && !down) {
+					image = SPR_AUTOROAD_X_UP;
+				} else if (down && !up) {
+					image = SPR_AUTOROAD_X_DOWN;
+				} else {
+					if (up && down) z += TILE_HEIGHT;
+					image = SPR_AUTOROAD_X;
+				}
+			} else if (dir == HT_DIR_Y) {
+				Slope up = s & (SLOPE_E | SLOPE_S);
+				Slope down = s & (SLOPE_N | SLOPE_W);
+				if (up && !down) {
+					image = SPR_AUTOROAD_Y_UP;
+				} else if (down && !up) {
+					image = SPR_AUTOROAD_Y_DOWN;
+				} else {
+					if (up && down) z += TILE_HEIGHT;
+					image = SPR_AUTOROAD_Y;
+				}
+			} else {
+				return;
+			}
+			DrawSelectionSprite(image, pal, ti, z, foundation_part);
 		} else if (IsPartOfAutoLine(ti->x, ti->y)) {
 			/* autorail highlighting long line */
 			HighLightStyle dir = _thd.drawstyle & HT_DIR_MASK;
