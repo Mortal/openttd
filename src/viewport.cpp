@@ -2458,6 +2458,9 @@ void UpdateTileSelection()
 					x1 += TILE_SIZE / 2;
 					y1 += TILE_SIZE / 2;
 					break;
+				case HT_ROADLINE:
+					new_drawstyle = GetAutoroadHT(pt.x, pt.y);
+					break;
 				case HT_RAIL:
 					/* Draw one highlighted tile in any direction */
 					new_drawstyle = GetAutorailHT(pt.x, pt.y);
